@@ -4,11 +4,8 @@ var path = require('path');
 
 var app = express();
 app.use(morgan('combined'));
-
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'index.html'));
-});
-var articleone={
+var articles={
+ 'article-one':{
   title:'article-one |utkarsh shukla',
   heading:'article-one',
   date:'7th august,2017',
@@ -18,7 +15,33 @@ var articleone={
                                     Desogning the first webapp is just awesome experience i like it!! Desogning the first webapp is just awesome experience i like it!!
                                     </p `
   
-};
+},
+'article-two':{
+    title:'article-two |utkarsh shukla',
+  heading:'article-two',
+  date:'7th august,2017',
+  content:` <p>
+                                    Desogning the first webapp is just awesome experience i like it!! Desogning the first webapp is just awesome experience i like it!!
+                                    Desogning the first webapp is just awesome experience i like it!! Desogning the first webapp is just awesome experience i like it!!
+                                    Desogning the first webapp is just awesome experience i like it!! Desogning the first webapp is just awesome experience i like it!!
+                                    </p `
+  
+
+},
+'article-three':{
+    title:'article-three |utkarsh shukla',
+  heading:'article-three',
+  date:'7th august,2017',
+  content:` <p>
+                                    Desogning the first webapp is just awesome experience i like it!! Desogning the first webapp is just awesome experience i like it!!
+                                    Desogning the first webapp is just awesome experience i like it!! Desogning the first webapp is just awesome experience i like it!!
+                                    Desogning the first webapp is just awesome experience i like it!! Desogning the first webapp is just awesome experience i like it!!
+                                    </p `
+  
+
+}
+
+}
 function createTemplate(data){
     var title=data.title;
     var date=data.date;
@@ -52,17 +75,14 @@ return htmlTemplate;
 }
 
 
-app.get('/article-one', function(req,res) {
-    
-  res.send(createTemplate(articleone));
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
-app.get('/article-two', function(req,res) {
-    
-    res.sendFile(path.join(__dirname, 'ui', 'article-two.html'));
-});
-app.get('/article-three', function(req,res) {
-    
-   res.sendFile(path.join(__dirname, 'ui', 'article-three.html'));
+
+
+app.get('/:articlesName', function(req,res) {
+    var articlesName=req.params.articlesName;
+  res.send(createTemplate(articles[articleName]));
 });
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
