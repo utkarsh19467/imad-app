@@ -8,7 +8,7 @@ button.onclick=function(){
       if(request.readystate===XMLHttpRequest.DONE){
           if(request.status===200)
           {
-            var counter=request.responsetext;
+            var counter=request.responseText;
             var span=document.getElementById('count');
             span.innerHTML=counter.toString();
             
@@ -16,6 +16,6 @@ button.onclick=function(){
       }  
     };
     
-    request.open('GET','http://utkarsh1521168.imad.hasura-app.io/counter',true);
+    request.open('GET','http://utkarsh1521168.imad.hasura-app.io//counter',true);
     request.send(null);
 };
