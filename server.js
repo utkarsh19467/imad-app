@@ -1,7 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
-var pool=require('pg').Pool;
+var Pool=require('pg').Pool;
 var config={
     user:'utkarsh1521168',
     database:'utkarsh1521168',
