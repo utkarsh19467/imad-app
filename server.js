@@ -3,6 +3,7 @@ var morgan = require('morgan');
 var path = require('path');
 var bodyParser=require('body-parser');
 var crypto=require('crypto');
+var session=require('express-session');
 var Pool=require('pg').Pool;
 var config={
     user:'utkarsh1521168',
@@ -14,6 +15,10 @@ var config={
 var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
+app.use(session({
+    secret:'someRandomSecretValue',
+    cookie:{maxAge:1000*60*60*30}
+}));
 var articles={
  'article-one':{
   title:'article-one |utkarsh shukla',
@@ -137,6 +142,7 @@ app.post('/login',function(req,res){
                var hashedPassword=hash(password,salt);
                if(hashedPassword===dbString)
                {
+                   req.session.auth={userId:result.rows[0].id};
                    res.send('credentials correct!');
                }
                else
@@ -146,6 +152,20 @@ app.post('/login',function(req,res){
            }
        }
    });
+});
+app.get('/check-login',function(req,res){
+   if(req.session&&req.session.auth&&req.session.auth.userId)
+   {
+       res.send('You are logged in: '+req.session.auth.userId.toString());
+   }
+   else
+   {
+       res.send('You are not logged in');
+   }
+});
+app.get('/logout',function(req,res){
+   delete req.session.auth;
+   res.send('logged out');
 });
 var pool=new Pool(config);
 app.get('/test-db',function(req,res){
